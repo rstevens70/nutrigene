@@ -47,7 +47,7 @@ ES6 module imports require files to be served over HTTP. You cannot open `index.
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/nutrigene.git
+git clone https://github.com/rstevens70/nutrigene.git
 cd nutrigene
 
 # Start the local server
