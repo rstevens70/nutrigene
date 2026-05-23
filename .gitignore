@@ -2,6 +2,10 @@
 
 # Personal genomic data — never commit raw DNA files
 rawdata/
+fake_genome_demo.txt
+
+# Screenshot tooling (not part of the app)
+take_screenshots.mjs
 
 # Claude Code internal config
 .claude/

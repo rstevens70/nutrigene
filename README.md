@@ -30,7 +30,20 @@ NutriGene analyses your raw DNA file entirely within your browser, cross-referen
 
 ## Screenshots
 
-> Screenshots coming soon.
+**Upload & Landing**
+![Upload page](screenshots/01_upload.png)
+
+**Sequencing Loader**
+![Loading screen](screenshots/02_loading.png)
+
+**Dashboard — Metrics & Pathway Overview**
+![Dashboard overview](screenshots/03_dashboard_overview.png)
+
+**Dashboard — SNP Detail Cards**
+![SNP cards](screenshots/04_snp_cards.png)
+
+**Nutritional Roadmap**
+![Nutritional roadmap](screenshots/05_roadmap.png)
 
 ---
 
