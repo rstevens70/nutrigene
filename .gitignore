@@ -1,0 +1,28 @@
+# NutriGene — files excluded from version control
+
+# Personal genomic data — never commit raw DNA files
+rawdata/
+
+# Claude Code internal config
+.claude/
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Vim swap files
+*.swp
+*.swo
+
+# Optional: VS Code workspace settings (user preference)
+# .vscode/

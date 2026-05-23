@@ -1,0 +1,24 @@
+{
+  "name": "nutrigene",
+  "version": "1.0.0",
+  "description": "Client-side nutrigenomic analyzer — 100% in-browser, zero data transmission",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "",
+  "keywords": [
+    "genomics",
+    "nutrigenomics",
+    "dna",
+    "snp",
+    "health",
+    "nutrition",
+    "privacy"
+  ],
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "start:npx": "npx serve . -p 8080"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

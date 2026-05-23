@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriGene // In-Memory Nutrigenomic Analyzer</title>
+  <meta name="description" content="Secure, client-side raw genomic data analyzer for science-backed nutritional supplementation and dietary optimization. No data saved.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Particle Shader Effect -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Notification Toasts (Error alerts) -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Primary Application Wrapper -->
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header>
+      <div class="logo-container">
+        <div class="logo-icon">N</div>
+        <h1 class="brand-name">NUTRIGENE</h1>
+      </div>
+      <div class="header-meta">
+        <span class="privacy-badge">
+          <span class="privacy-dot"></span>
+          LOCAL SANDBOX
+        </span>
+      </div>
+    </header>
+
+    <main>
+      
+      <!-- ========================================== -->
+      <!-- VIEW 1: LANDING & FILE DROPZONE            -->
+      <!-- ========================================== -->
+      <section id="landing-view" class="view-section active">
+        <div class="hero-content">
+          <span class="hero-tag">Nutrigenomic Intelligence</span>
+          <h2>Optimize Your Health Through Your DNA</h2>
+          <p>Upload your raw genomic data file. NutriGene runs a 100% client-side, in-memory analysis to extract mutations backed by peer-reviewed research and generates a customized supplementation and dietary roadmap.</p>
+        </div>
+
+        <div class="dropzone-container">
+          <div id="dropzone" class="dropzone">
+            <span class="dropzone-icon">🧬</span>
+            <h3>Upload Raw Genomic Data</h3>
+            <p>Drag and drop your file here, or click to browse.<br>Supported extensions: .txt, .csv (Max 50MB)</p>
+            <button type="button" class="upload-btn">Browse Files</button>
+            <input type="file" id="file-input" accept=".txt,.csv">
+          </div>
+          
+          <div class="supported-providers">
+            <span>23andMe</span>
+            <span>AncestryDNA</span>
+            <span>MyHeritage</span>
+            <span>Generic VCF / Raw Text</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: CHROMOSOME SEQUENCER LOADER        -->
+      <!-- ========================================== -->
+      <section id="loading-view" class="view-section">
+        <div class="loader-container">
+          <div class="sequencer">
+            <div class="sequencer-circle"></div>
+            <div class="sequencer-circle-inner"></div>
+          </div>
+          <h3>Sequencing DNA Nodes</h3>
+          <p class="loading-status-text">Extracting allele configurations...</p>
+          
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill"></div>
+          </div>
+          <span class="progress-percentage">0%</span>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: INTERACTIVE RESULTS DASHBOARD      -->
+      <!-- ========================================== -->
+      <section id="dashboard-view" class="view-section">
+        
+        <!-- Dashboard Sub-Header -->
+        <div class="dashboard-header">
+          <div class="user-metadata">
+            <h2>Genome Analysis Overview</h2>
+            <p>File Signature: Verified &bull; Scanned <span id="meta-snp-count">0</span> SNPs via <span id="meta-format">RAW</span> format</p>
+          </div>
+          
+          <div class="tabs-navigation">
+            <button id="tab-dashboard" class="tab-btn active">Dashboard</button>
+            <button id="tab-roadmap" class="tab-btn">Nutritional Roadmap</button>
+          </div>
+        </div>
+
+        <!-- Metric Summary Cards -->
+        <div class="metrics-grid">
+          <div class="glass-panel metric-card" style="border-left: 3px solid var(--color-secondary);">
+            <span class="label">Markers Analyzed</span>
+            <span id="metric-variants-analyzed" class="value">0 Targets</span>
+            <span class="subtext">Matched from research index</span>
+          </div>
+          <div class="glass-panel metric-card" style="border-left: 3px solid var(--color-danger);">
+            <span class="label">Actionable Alerts</span>
+            <span id="metric-critical-alerts" class="value">0</span>
+            <span class="subtext">Moderate/high impact mutations</span>
+          </div>
+          <div class="glass-panel metric-card" style="border-left: 3px solid var(--color-primary);">
+            <span class="label">Optimization Index</span>
+            <span id="metric-optimization-score" class="value">100%</span>
+            <span class="subtext">Starts at 100% — deducted 8% per moderate variant, 18% per high-impact variant</span>
+          </div>
+          <div class="glass-panel metric-card" style="border-left: 3px solid var(--color-success);">
+            <span class="label">Primary Assessment</span>
+            <span id="metric-alert-status" class="value" style="font-size: 1.35rem; font-weight: 700; margin-top: 0.5rem; text-transform: uppercase;">Optimal</span>
+            <span class="subtext">Optimal = no actionable variants · Moderate Support = moderate variants found · High Priority = high-impact variants detected</span>
+          </div>
+        </div>
+
+        <!-- TAB A: DASHBOARD VIEW -->
+        <div id="dashboard-main-sections">
+          
+          <!-- Bento Grid Pathways -->
+          <div id="pathways-bento-container" class="bento-grid">
+            <!-- Dynamic Pathway Cards render here -->
+          </div>
+
+          <!-- Detailed SNP Search and Cards -->
+          <div id="detailed-snps-section" class="detailed-snps-section">
+            <div class="search-filter-row">
+              <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by rsID, Gene, or Pathway...">
+              </div>
+              
+              <div class="impact-filter">
+                <button class="filter-btn active" data-filter="all">All Targets</button>
+                <button class="filter-btn" data-filter="high">High Impact</button>
+                <button class="filter-btn" data-filter="moderate">Moderate</button>
+                <button class="filter-btn" data-filter="low">Low Impact</button>
+              </div>
+            </div>
+
+            <div id="snp-cards-container" class="snp-cards-grid">
+              <!-- Dynamic SNP Cards render here -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TAB B: NUTRITIONAL ROADMAP VIEW -->
+        <div id="roadmap-main-sections" style="display: none;">
+          <div class="roadmap-grid">
+            
+            <!-- Supplement Protocol -->
+            <div class="glass-panel roadmap-card full-width">
+              <h3><span>💊</span> Targeted Supplement Protocol</h3>
+              <ul id="supplements-list" class="roadmap-list">
+                <!-- Dynamic supplements list items -->
+              </ul>
+            </div>
+
+            <!-- Foods to Include -->
+            <div class="glass-panel roadmap-card">
+              <h3><span>🥗</span> Recommended Foods (Supportive)</h3>
+              <ul id="foods-include-list" class="roadmap-list">
+                <!-- Dynamic foods to include list items -->
+              </ul>
+            </div>
+
+            <!-- Foods to Limit/Avoid -->
+            <div class="glass-panel roadmap-card">
+              <h3><span>⚠️</span> Foods & Ingredients to Avoid</h3>
+              <ul id="foods-avoid-list" class="roadmap-list">
+                <!-- Dynamic foods to avoid list items -->
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bottom Reset Actions -->
+        <div class="reset-btn-container">
+          <button id="export-csv-btn" class="export-btn">Export CSV</button>
+          <button id="export-text-btn" class="export-btn">Export Report</button>
+          <button id="reset-btn" class="reset-btn">Clear Data & Analyze Another File</button>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer>
+      <p>&copy; 2026 NutriGene. All analysis runs locally in your browser cache. Uploaded raw data is parsed completely in-memory and discarded upon window close.</p>
+      <p style="font-size: 0.75rem; margin-top: 0.5rem; opacity: 0.5;">Disclaimer: This application is for educational and informational purposes only. It is not medical advice. Consult with a qualified physician before starting any diet or supplement program.</p>
+    </footer>
+
+  </div>
+
+  <!-- Javascript Entry Modules -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
