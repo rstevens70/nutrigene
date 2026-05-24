@@ -63,12 +63,12 @@ Replicates the exact client-side analysis pipeline from the NutriGene codebase (
 ## SNPDictionary Usage
 Use the exact entries from dictionary.js (11 rsIDs: rs1801133, rs1801113, rs601338, rs1544410, rs6564851, rs4988235, rs762551, rs174537, rs4654748, rs4680, rs429358+rs7412). All claims have PMIDs. Do not invent entries.
 
-## Common Pitfalls
-- Assuming genotype order without normalizeAndMatchGenotype (CT vs TC must both match).
-- Skipping APOE compound logic.
-- Reporting without citations or carrierOf notes.
-- Processing files with binary/JS content — always run full sanitize first.
-- Treating as medical advice (always include disclaimer).
+## Gotchas
+- Assuming genotype order without normalizeAndMatchGenotype (CT vs TC must both match — the normalizer handles both).
+- Skipping the APOE compound logic (rs429358 + rs7412) — it is required for Cardiovascular pathway and E2/E3/E4 status.
+- Reporting without citations or carrierOf notes — every recommendation must include the PMID.
+- Processing files with binary/JS content — always run the full sanitize first; the 40% malformed threshold is strict.
+- Treating output as medical advice — the disclaimer must always be included verbatim.
 
 ## Verification Checklist
 - [ ] File passes all 5 validation checks with original error strings.
